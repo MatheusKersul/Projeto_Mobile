@@ -1,0 +1,23 @@
+package com.example.myapplication
+
+import android.app.Application
+import com.parse.Parse
+import com.parse.ParseUser
+
+class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+        Parse.initialize(
+            Parse.Configuration.Builder(this)
+                .applicationId("fd4At9HTH8Fgjmgywa3DJmUePfFjQgbUQdaoP4Cy")
+                .clientKey("UARcfPcx7z5woXAQPFKNjzEOVC8AIctIjuwhWHPO")
+                .server("https://parseapi.back4app.com/")
+                .build()
+        )
+        ParseUser.enableAutomaticUser()
+
+
+        ParseUser.getCurrentUser()?.saveInBackground()
+    }
+}

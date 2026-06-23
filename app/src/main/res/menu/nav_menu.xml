@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_chamado"
+        android:title="Novo Chamado" />
+    <item
+        android:id="@+id/nav_listagem"
+        android:title="Listagem de Chamados" />
+    <item
+        android:id="@+id/nav_pesquisa"
+        android:title="Pesquisar" />
+    <item
+        android:id="@+id/nav_estatistica"
+        android:title="Estatística" />
+    <item
+        android:id="@+id/nav_sobre"
+        android:title="Sobre o Sistema" />
+</menu>
