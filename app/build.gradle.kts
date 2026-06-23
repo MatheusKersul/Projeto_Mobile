@@ -39,8 +39,10 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
+    implementation(libs.camera.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("com.github.parse-community.Parse-SDK-Android:parse:4.2.1")
     implementation("com.google.android.material:material:1.12.0")
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class BD extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "bd";
 
     public BD(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -32,7 +32,8 @@ public class BD extends SQLiteOpenHelper {
                         "local TEXT,"+
                         "solucao TEXT,"+
                         "tipo INTEGER, "+
-                        "status INTEGER"+
+                        "status INTEGER,"+
+                        "foto TEXT" +
                         ")"
         );
         Log.i("##", "Tabela Pessoa Criada");
@@ -50,21 +51,24 @@ public class BD extends SQLiteOpenHelper {
         valores.put("tipo", p.getTipo());
         valores.put("status", p.getStatus());
         valores.put("solucao", p.getSolucao());
+        valores.put("foto", p.getFoto());
+        valores.put("foto", p.getFoto());
 
         db.insert("pessoa", null, valores);
         db.close();
 
         Log.i("##", "Dados da Pessoa (Evento/Tarefa) Salvos com Sucesso");
     }
-    public ArrayList<Pessoa> getLista(){
+    public ArrayList<Pessoa> getLista() {
         ArrayList<Pessoa> lista = new ArrayList<Pessoa>();
+        Cursor cursor = null;
 
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(
-                "pessoa",null,null,null,
-                null,null,null);
-        if(cursor.moveToFirst()){
-            do{
+        cursor = db.query(
+                "pessoa", null, null, null,
+                null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
                 String lTitulo = cursor.getString(cursor.getColumnIndexOrThrow("titulo"));
                 String lData = cursor.getString(cursor.getColumnIndexOrThrow("data"));
                 String lDescricao = cursor.getString(cursor.getColumnIndexOrThrow("descricao"));
@@ -73,20 +77,28 @@ public class BD extends SQLiteOpenHelper {
                 int lTipo = cursor.getInt(cursor.getColumnIndexOrThrow("tipo"));
                 int lStatus = cursor.getInt(cursor.getColumnIndexOrThrow("status"));
                 int lId = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
-                Pessoa p = new Pessoa(lSolucao, lTitulo, lData, lDescricao, lLocal, lTipo, lStatus, lId);
+                String lFoto = "";
+                int fotoIndex = cursor.getColumnIndex("foto");
+                if (fotoIndex != -1 && !cursor.isNull(fotoIndex)) {
+                    lFoto = cursor.getString(fotoIndex);
+                }
+
+                // Cria o objeto passando a foto no final
+                Pessoa p = new Pessoa(lSolucao, lTitulo, lData, lDescricao, lLocal, lTipo, lStatus, lId, lFoto);
+
 
                 lista.add(p);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        for(int i = 0; i<lista.size();i++){
+        for (int i = 0; i < lista.size(); i++) {
             Log.i("##", lista.get(i).getTitulo());
             Log.i("##", lista.get(i).getData());
             Log.i("##", lista.get(i).getDescricao());
             Log.i("##", lista.get(i).getLocal());
-            Log.i("##", "Tipo: "  + lista.get(i).getTipo());
-            Log.i("##","Status: " + lista.get(i).getStatus());
+            Log.i("##", "Tipo: " + lista.get(i).getTipo());
+            Log.i("##", "Status: " + lista.get(i).getStatus());
             Log.i("##", "----------");
         }
 
@@ -97,7 +109,6 @@ public class BD extends SQLiteOpenHelper {
 
         ArrayList<Pessoa> lista = getLista();
         ArrayList<Pessoa> listaFiltrada = new ArrayList<>();
-        SQLiteDatabase db = getWritableDatabase();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         for (Pessoa p : lista){
@@ -105,7 +116,7 @@ public class BD extends SQLiteOpenHelper {
             boolean check = true;
 
             if (!titulo.isEmpty()){
-                if(!p.getTitulo().toLowerCase().startsWith(titulo.toLowerCase()))       //se não começa com o que veio no titulo, trava
+                if(!p.getTitulo().toLowerCase().startsWith(titulo.toLowerCase()))
                     check = false;
             }
 
@@ -220,6 +231,11 @@ public class BD extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("ALTER TABLE pessoa ADD COLUMN solucao TEXT");
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE pessoa ADD COLUMN solucao TEXT");
+        }
+        if (oldVersion < 3) {
+            db.execSQL("ALTER TABLE pessoa ADD COLUMN foto TEXT");
+        }
     }
 }

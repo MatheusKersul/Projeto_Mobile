@@ -14,7 +14,7 @@ public class Recycler extends RecyclerView.Adapter<Recycler.ViewHolder> {
     private ArrayList<Pessoa> lista;
     private OnItemClickListener listener;
 
-    // interface com nome e método corretos
+
     public interface OnItemClickListener {
         void onItemClick(Pessoa pessoa);
     }
@@ -52,6 +52,27 @@ public class Recycler extends RecyclerView.Adapter<Recycler.ViewHolder> {
             case 1: holder.tvTipo.setText("Infraestrutura"); break;
             case 2: holder.tvTipo.setText("TI"); break;
         }
+        String fotoBase64 = p.getFoto();
+
+        if (fotoBase64 != null && !fotoBase64.isEmpty()) {
+            holder.imgFotoLista.setVisibility(View.VISIBLE);
+            byte[] decodedString = android.util.Base64.decode(fotoBase64, android.util.Base64.DEFAULT);
+            android.graphics.Bitmap decodedByte = android.graphics.BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            holder.imgFotoLista.setImageBitmap(decodedByte);
+
+            holder.imgFotoLista.setOnClickListener(v -> {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(v.getContext());
+                android.widget.ImageView imageView = new android.widget.ImageView(v.getContext());
+                imageView.setImageBitmap(decodedByte);
+                imageView.setPadding(10, 10, 10, 10);
+
+                builder.setView(imageView);
+                builder.setPositiveButton("Fechar", null);
+                builder.show();
+            });
+        } else {
+            holder.imgFotoLista.setVisibility(View.GONE);
+        }
 
         holder.itemView.setOnClickListener(v -> listener.onItemClick(p));
     }
@@ -63,7 +84,7 @@ public class Recycler extends RecyclerView.Adapter<Recycler.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitulo, tvStatus, tvTipo, tvData, tvDesc, tvSolucao, tvLocal;
-
+        android.widget.ImageView imgFotoLista;
         public ViewHolder(View itemView) {
             super(itemView);
             tvTitulo = itemView.findViewById(R.id.tvTitulo);
@@ -73,8 +94,10 @@ public class Recycler extends RecyclerView.Adapter<Recycler.ViewHolder> {
             tvDesc   = itemView.findViewById(R.id.idDesc);
             tvSolucao = itemView.findViewById(R.id.tvSolucao);
             tvLocal = itemView.findViewById(R.id.tvLocal);
+            imgFotoLista = itemView.findViewById(R.id.imgFotoLista);
         }
     }
+
 
     public void atualizarLista(ArrayList<Pessoa> novaLista) {
         this.lista = novaLista;

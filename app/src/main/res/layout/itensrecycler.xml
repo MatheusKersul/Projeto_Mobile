@@ -9,8 +9,6 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <!-- LINHA SUPERIOR: título + status -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,10 +38,8 @@
             android:text="Aberto"
             android:textSize="12sp"
             android:textStyle="bold" />
-
     </LinearLayout>
 
-    <!-- TIPO -->
     <TextView
         android:id="@+id/tvTipo"
         android:layout_width="match_parent"
@@ -51,8 +47,6 @@
         android:layout_marginTop="4dp"
         android:text="Tipo: Reclamação"
         android:textSize="13sp" />
-
-    <!-- DATA -->
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -89,7 +83,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#ffffff"
         android:orientation="horizontal"
         android:paddingTop="10dp"
@@ -111,16 +105,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/imgFotoLista"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="#E7FBD1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.05"
-            android:text="Solução:" />
+            android:text="Solução: " />
 
         <TextView
             android:id="@+id/tvSolucao"
@@ -128,7 +137,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Não solucionado" />
-
     </LinearLayout>
 
 </LinearLayout>

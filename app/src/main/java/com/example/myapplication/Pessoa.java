@@ -1,16 +1,12 @@
 package com.example.myapplication;
 public class Pessoa {
 
-    private String titulo, data, descricao, local, solucao;
+    private String titulo, data, descricao, local, solucao, foto;
     private int tipo, status, id;
 
-    // Construtor vazio
+
     public Pessoa() {
     }
-
-    // Construtor completo utilizando as variáveis do escopo
-
-
     public Pessoa(String titulo, String data, String descricao, String local, int tipo, int status) {
         this.titulo = titulo;
         this.data = data;
@@ -30,11 +26,18 @@ public class Pessoa {
         this.id = id;
     }
 
+    public Pessoa(String solucao, String titulo, String data, String descricao, String local, int tipo, int status, int id, String foto) {
+        this.solucao = solucao;
+        this.titulo = titulo;
+        this.data = data;
+        this.descricao = descricao;
+        this.local = local;
+        this.tipo = tipo;
+        this.status = status;
+        this.id = id;
+        this.foto = foto;
+    }
 
-
-
-
-    // Exemplo de construtor parcial (seguindo a lógica do anterior, adaptado para 'titulo')
     public Pessoa(String titulo) {
         this.titulo = titulo;
     }
@@ -92,4 +95,8 @@ public class Pessoa {
     public void setSolucao(String solucao){this.solucao = solucao;}
 
     public int getId(){return id;}
+
+    public String getFoto(){return foto;}
+
+    public void setFoto(){this.foto = foto;}
 }

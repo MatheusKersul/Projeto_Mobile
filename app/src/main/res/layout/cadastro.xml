@@ -265,6 +265,21 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btnTirarFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Tirar Foto" />
+
+        <ImageView
+            android:id="@+id/imgFoto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="10dp" />
+
+        <Button
             android:id="@+id/idButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
