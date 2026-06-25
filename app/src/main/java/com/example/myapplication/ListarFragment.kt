@@ -29,11 +29,7 @@ class ListarFragment : Fragment(R.layout.listar) {
 
     override fun onResume() {
         super.onResume()
-
-        // 1. Carrega o que já tem no celular imediatamente
         carregarListaLocal()
-
-        // 2. Vai na nuvem buscar se tem chamados antigos para baixar
         sincronizarComNuvem()
     }
 
@@ -68,7 +64,6 @@ class ListarFragment : Fragment(R.layout.listar) {
                     val jaExiste = listaLocalAtual.any { it.titulo == tituloNuvem }
 
                     if (!jaExiste) {
-                        // Se achou um chamado na nuvem que não está no celular, faz o download e salva!
                         val novaPessoa = Pessoa(
                             "Não solucionado",
                             tituloNuvem,
@@ -77,15 +72,14 @@ class ListarFragment : Fragment(R.layout.listar) {
                             obj.getString("local") ?: "",
                             obj.getInt("tipo"),
                             obj.getInt("status"),
-                            0, // O SQLite gera o ID automaticamente
-                            obj.getString("fotoTextual") ?: "" // Puxa a nossa foto em Base64
+                            0, //
+                            obj.getString("fotoTextual") ?: ""
                         )
                         bd.salvarDados(novaPessoa)
                         teveAtualizacao = true
                     }
                 }
 
-                // Se baixou chamados novos, recarrega a tela para eles aparecerem na lista
                 if (teveAtualizacao) {
                     carregarListaLocal()
                 }
