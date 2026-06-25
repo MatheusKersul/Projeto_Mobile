@@ -10,9 +10,9 @@ class App : Application() {
 
         Parse.initialize(
             Parse.Configuration.Builder(this)
-                .applicationId("fd4At9HTH8Fgjmgywa3DJmUePfFjQgbUQdaoP4Cy")
-                .clientKey("UARcfPcx7z5woXAQPFKNjzEOVC8AIctIjuwhWHPO")
-                .server("https://parseapi.back4app.com/")
+                .applicationId("")
+                .clientKey("")
+                .server("")
                 .build()
         )
         ParseUser.enableAutomaticUser()
