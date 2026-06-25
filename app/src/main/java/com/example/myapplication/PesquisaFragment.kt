@@ -39,7 +39,6 @@ class PesquisaFragment : Fragment(R.layout.pesquisa) {
         dataInicio.setOnClickListener { mostrarCalendario(dataInicio) }
         dataFim.setOnClickListener { mostrarCalendario(dataFim) }
 
-        // Inicializa o recycler vazio
         adapter = Recycler(ArrayList()) { pessoa ->
             val i = Intent(requireContext(), Status::class.java)
             i.putExtra("titulo", pessoa.titulo)
